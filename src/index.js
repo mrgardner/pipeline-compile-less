@@ -11,6 +11,9 @@ var LessPluginAutoPrefix = require('less-plugin-autoprefix');
 var autoprefix = new LessPluginAutoPrefix({browsers: ['last 2 versions']});
 
 var config = {
+  concatCSS: false,
+  addSourceMaps: true,
+  autoprefix: true,
   output: 'dist/'
 };
 
@@ -30,16 +33,25 @@ function compileLESSPipeline(options) {
 
   function compileLESS() {
     return lazypipe()
+      .pipe(function() {
+        return plugins.if(config.addSourceMaps, plugins.sourcemaps.init());
+      })
       .pipe(addLESSReporter)
+      .pipe(function() {
+        return plugins.if(config.concatCSS, plugins.concat('concat.css'));
+      })
+      .pipe(function() {
+        return plugins.if(config.addSourceMaps, plugins.sourcemaps.write('maps'));
+      })
       .pipe(gulp.dest, config.output);
   }
 
   function addLESSReporter() {
+    var lessPlugins = config.autoprefix ? {plugins: [autoprefix]} : {plugins: []};
     return plugins.piece(
-      plugins.less({
-        plugins: [autoprefix]
-      })
-      .on('error', reporter)
+      plugins.less(lessPlugins)
+      .on('error', reporter),
+      gulp.dest(config.output)
     );
   }
 }

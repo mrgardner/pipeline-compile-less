@@ -1,7 +1,7 @@
 {
-  "name": "pipeline-build-js",
+  "name": "pipeline-compile-less",
   "version": "0.1.0-SNAPSHOT",
-  "description": "Gulp pipeline to run tests locally using node and mocha",
+  "description": "Gulp pipeline to compile LESS files",
   "author": "Juan P. Osorio <jposorio@kenzan.com> (https://github.com/jpoo90)",
   "contributors": [
     {
@@ -19,13 +19,14 @@
   "main": "src/index.js",
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com:kenzanmedia/pipeline-build-js.git"
+    "url": "ssh://git@github.com:kenzanmedia/pipeline-compile-less.git"
   },
   "keywords": [
     "Gulp",
     "Tools",
     "Keystone",
-    "Pipeline"
+    "Pipeline",
+    "LESS"
   ],
   "preferGlobal": false,
   "private": false,
@@ -40,11 +41,15 @@
   "license": "ISC",
   "dependencies": {
     "chai": "3.3.0",
+    "del": "2.0.2",
     "gulp": "3.9.0",
+    "gulp-concat": "2.6.0",
+    "gulp-if": "2.0.0",
     "gulp-less": "3.0.3",
     "gulp-less-reporter": "0.0.2",
     "gulp-load-plugins": "0.10.0",
     "gulp-piece": "1.1.1",
+    "gulp-sourcemaps": "1.6.0",
     "gulp-util": "3.0.6",
     "lazypipe": "1.0.1",
     "less-plugin-autoprefix": "1.5.1",
@@ -52,6 +57,7 @@
     "pipeline-validate-js": "git+ssh://git@github.com/kenzanmedia/pipeline-validate-js.git#55c0ec3a51799e83d4748ffbb700687fb818b8f5"
   },
   "devDependencies": {
+    "path": "0.12.7",
     "stream-assert": "2.0.3"
   }
 }
