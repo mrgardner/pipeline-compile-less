@@ -2,19 +2,28 @@
 'use strict';
 
 var gulp = require('gulp');
-var buildPipeline = require('./src/index.js')();
+var compilePipeline = require('./src/index.js')();
 var validatePipeline = require('pipeline-validate-js')();
 
 var config = {
   files: [
    'src/**/*.js',
-   'test/**/*.js'
+  ],
+
+  LESS_Files: [
+   'test/**/*.less'
   ]
+
 };
 
-gulp.task('default', function() {
+gulp.task('validate', function() {
   return gulp
     .src(config.files)
-    .pipe(validatePipeline.validateJS())
-    .pipe(buildPipeline.minifyJS());
+    .pipe(validatePipeline.validateJS());
+});
+
+gulp.task('default', ['validate'] , function() {
+  return gulp
+    .src(config.LESS_Files)
+    .pipe(compilePipeline.compileLESS());
 });

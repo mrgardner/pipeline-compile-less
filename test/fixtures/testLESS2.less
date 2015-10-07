@@ -1,0 +1,24 @@
+/* Mixin */
+.box-shadow (@x: 0px, @y: 3px, @blur: 5px, @alpha: 0.5) {
+	box-shadow: @x @y @blur rgba(0, 0, 0, @alpha);
+}
+
+/* Implementation */
+#somediv {
+	.box-shadow(5px, 5px, 6px, 0.3);
+}
+
+/* Mixin */
+.transition (@prop: all, @time: 1s, @ease: linear) {
+	transition: @prop @time @ease;
+}
+
+/* Implementation */
+#somediv {
+	.transition(all, 0.5s, ease-in);
+}
+
+#somediv:hover {
+	opacity: 0;
+	display: flex;
+}
