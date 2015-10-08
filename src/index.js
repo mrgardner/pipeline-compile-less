@@ -8,7 +8,6 @@ var lazypipe = require('lazypipe');
 var plugins = require('gulp-load-plugins')({lazy: true});
 var reporter = require('gulp-less-reporter');
 var LessPluginAutoPrefix = require('less-plugin-autoprefix');
-var autoprefix = new LessPluginAutoPrefix({browsers: ['last 2 versions']});
 
 var config = {
   concatCSS: false,
@@ -47,6 +46,15 @@ function compileLESSPipeline(options) {
   }
 
   function addLESSReporter() {
+    var autoprefix;
+
+    if (typeof config.autoprefix === 'object') {
+      handyman.log('re');
+      autoprefix = new LessPluginAutoPrefix(config.autoprefix);
+    } else {
+      autoprefix = new LessPluginAutoPrefix({browsers: ['last 2 versions']});
+    }
+
     var lessPlugins = config.autoprefix ? {plugins: [autoprefix]} : {plugins: []};
     return plugins.piece(
       plugins.less(lessPlugins)

@@ -10,7 +10,7 @@ var config = {
    'src/**/*.js',
   ],
 
-  LESS_Files: [
+  lessFiles: [
    'test/**/*.less'
   ]
 
@@ -24,7 +24,7 @@ gulp.task('validate', function() {
 
 gulp.task('default', ['clean', 'validate'] , function() {
   return gulp
-    .src(config.LESS_Files)
+    .src(config.lessFiles)
     .pipe(compilePipeline.compileLESS());
 });
 
