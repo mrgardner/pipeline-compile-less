@@ -1,7 +1,14 @@
 'use strict';
 
+
+var config = {
+
+  opts: {
+    autoprefix: {browsers: ['Firefox < 20']},
+  }
+};
 var gulp = require('gulp');
-var compilePipeline = require('./src/index.js')();
+var compilePipeline = require('./src/index.js')(config);
 var validatePipeline = require('pipeline-validate-js')();
 var del = require('del')
 

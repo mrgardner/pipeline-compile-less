@@ -10,10 +10,13 @@ var reporter = require('gulp-less-reporter');
 var LessPluginAutoPrefix = require('less-plugin-autoprefix');
 
 var config = {
-  concatCSS: false,
-  addSourceMaps: true,
-  autoprefix: true,
-  output: 'dist/'
+  skipAutoprefix: false,
+  opts: {
+    concatCSS: false,
+    addSourceMaps: true,
+    autoprefix: {browsers: ['last 2 versions']},
+    output: 'dist/'
+  }
 };
 
 module.exports = compileLESSPipeline;
@@ -33,32 +36,26 @@ function compileLESSPipeline(options) {
   function compileLESS() {
     return lazypipe()
       .pipe(function() {
-        return plugins.if(config.addSourceMaps, plugins.sourcemaps.init());
+        return plugins.if(config.opts.addSourceMaps, plugins.sourcemaps.init());
       })
-      .pipe(addLESSReporter)
+      .pipe(generateCSSFiles)
       .pipe(function() {
-        return plugins.if(config.concatCSS, plugins.concat('concat.css'));
+        return plugins.if(config.opts.concatCSS, plugins.concat('concat.css'));
       })
       .pipe(function() {
-        return plugins.if(config.addSourceMaps, plugins.sourcemaps.write('maps'));
+        return plugins.if(config.opts.addSourceMaps, plugins.sourcemaps.write('maps'));
       })
-      .pipe(gulp.dest, config.output);
+      .pipe(gulp.dest, config.opts.output);
   }
 
-  function addLESSReporter() {
-    var autoprefix;
+  function generateCSSFiles() {
+    var autoprefix = new LessPluginAutoPrefix(config.opts.autoprefix);
+    var lessPlugins = config.skipAutoprefix ? {plugins: []} : {plugins: [autoprefix]};
 
-    if (typeof config.autoprefix === 'object') {
-      autoprefix = new LessPluginAutoPrefix(config.autoprefix);
-    } else {
-      autoprefix = new LessPluginAutoPrefix({browsers: ['last 2 versions']});
-    }
-
-    var lessPlugins = config.autoprefix ? {plugins: [autoprefix]} : {plugins: []};
     return plugins.piece(
       plugins.less(lessPlugins)
       .on('error', reporter),
-      gulp.dest(config.output)
+      gulp.dest(config.opts.output)
     );
   }
 }

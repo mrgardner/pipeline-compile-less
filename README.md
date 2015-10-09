@@ -35,26 +35,29 @@ gulp.task('default', function() {
 Pipeline options:
 * _config_ -> Object that contains the configuration.
 
-    + __config.concatCSS:__ If set to __true__ the pipeline will concatenate all of the files and generate a single CSS file.
+    1. __skipAutoprefix__ If you don't want to have your CSS rules prefixed set this property to __true__.
 
-    + __config.addSourceMaps:__ If set to __false__ source maps won't be generated for the compile files. By default the pipeline will generate the source maps and store them in _maps_.
+    2. __opts__ Gathers all of the specific configurations for the tasks used in the pipeline.
 
-    + __config.autoprefix:__ Adds vendor specific prefixes automatically.
-      + You can provide your own autoprefix configuration setting an object-- following [this](https://github.com/postcss/autoprefixer#browsers) rules.
+      + __opts.concatCSS__ If set to __true__ the pipeline will concatenate all of the files and generate a single CSS file.
 
-      + If you don't want to have your CSS rules prefixed set this property to _false_.
+      + __opts.addSourceMaps__ If set to __false__ source maps won't be generated for the compile files. By default the pipeline will generate the source maps and store them in _maps_.
 
-    + __config.output:__ Sets the path to output the generated CSS files.
+      + __opts.autoprefix__ Adds vendor specific prefixes automatically. Also, you can provide your own autoprefix configuration setting an object-- following [this](https://github.com/postcss/autoprefixer#browsers) rules.
+      + __opts.output__ Sets the path to output the generated CSS files.
 
 
   Default:
   ```javascript
   config = {
-    concatCSS: false,
-    addSourceMaps: true,
-    autoprefix: true,
-    output: 'dist/'
-  }
+    skipAutoprefix: false,
+    opts: {
+      concatCSS: false,
+      addSourceMaps: true,
+      autoprefix: {browsers: ['last 2 versions']},
+      output: 'dist/'
+    }
+  };
   ```  
 
 ## Results
