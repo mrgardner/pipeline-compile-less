@@ -35,11 +35,14 @@ gulp.task('default', function() {
 Pipeline options:
 * _config_ -> Object that contains the configuration.
 
-    + __config.concatCSS:__ If set to _true_ the pipeline will concatenate all of the files and generate a single CSS file.
+    + __config.concatCSS:__ If set to __true__ the pipeline will concatenate all of the files and generate a single CSS file.
 
-    + __config.addSourceMaps:__ If set to _false_ source maps won't be generated for the compile files. By default the pipeline will generate the source maps and store them in _maps_.
+    + __config.addSourceMaps:__ If set to __false__ source maps won't be generated for the compile files. By default the pipeline will generate the source maps and store them in _maps_.
 
-    + __config.autoprefix:__ Adds vendor specific prefixes automatically. If you don't want to have your CSS rules prefixed set this property to _false_.
+    + __config.autoprefix:__ Adds vendor specific prefixes automatically.
+      + You can provide your own autoprefix configuration setting an object-- following [this](https://github.com/postcss/autoprefixer#browsers) rules.
+
+      + If you don't want to have your CSS rules prefixed set this property to _false_.
 
     + __config.output:__ Sets the path to output the generated CSS files.
 

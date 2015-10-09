@@ -6,7 +6,7 @@ var validatePipeline = require('pipeline-validate-js')();
 var del = require('del')
 
 var config = {
-  files: [
+  jsFiles: [
    'src/**/*.js',
   ],
 
@@ -18,7 +18,7 @@ var config = {
 
 gulp.task('validate', function() {
   return gulp
-    .src(config.files)
+    .src(config.jsFiles)
     .pipe(validatePipeline.validateJS());
 });
 
