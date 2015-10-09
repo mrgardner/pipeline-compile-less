@@ -47,7 +47,7 @@ function compileLESSPipeline(options) {
 
   function addLESSReporter() {
     var autoprefix;
-    
+
     if (typeof config.autoprefix === 'object') {
       autoprefix = new LessPluginAutoPrefix(config.autoprefix);
     } else {
