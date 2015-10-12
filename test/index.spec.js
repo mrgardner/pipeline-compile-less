@@ -13,23 +13,9 @@ describe('pipeline-compile-less', function() {
 
   var testPath = path.join(__dirname, 'dist');
 
-  it('Should output the same number of files compiled', function (done) {
-    gulp
-      .src(fixtures('*'))
-      .pipe(compilePipeline({addSourceMaps: false, output: testPath}).compileLESS())
-      .pipe(assert.length(2))
-      .pipe(assert.end(done));
-  });
 
-  it('Should output the same number of files compiled and the map for each one', function (done) {
-    gulp
-      .src(fixtures('*'))
-      .pipe(compilePipeline({addSourceMaps: true, output: testPath}).compileLESS())
-      .pipe(assert.length(4))
-      .pipe(assert.end(done));
-  });
 
-  it('Should generate a single concatenate file', function (done) {
+  it('Should output one file after concatenation', function (done) {
     gulp
       .src(fixtures('*'))
       .pipe(compilePipeline({addSourceMaps: false, concatCSS:true, output: testPath}).compileLESS())
@@ -37,5 +23,30 @@ describe('pipeline-compile-less', function() {
       .pipe(assert.first(function (d) { d.relative.toString().should.eql('concat.css'); }))
       .pipe(assert.end(done));
   });
+
+  it('Should output the concatenated file and the map', function (done) {
+    gulp
+      .src(fixtures('*'))
+      .pipe(compilePipeline({addSourceMaps: true, output: testPath}).compileLESS())
+      .pipe(assert.length(2))
+      .pipe(assert.end(done));
+  });
+
+  it('Should output the same number of files compiled', function (done) {
+    gulp
+      .src(fixtures('*'))
+      .pipe(compilePipeline({addSourceMaps: false, concatCSS: false, output: testPath}).compileLESS())
+      .pipe(assert.length(2))
+      .pipe(assert.end(done));
+  });
+
+  it('Should output the same number of files compiled and the map for each one', function (done) {
+    gulp
+      .src(fixtures('*'))
+      .pipe(compilePipeline({addSourceMaps: true, concatCSS: false, output: testPath}).compileLESS())
+      .pipe(assert.length(4))
+      .pipe(assert.end(done));
+  });
+
 
 });

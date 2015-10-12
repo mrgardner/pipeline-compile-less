@@ -1,7 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
-var compilePipeline = require('./src/index.js')(config);
+var compilePipeline = require('./src/index.js')();
 var validatePipeline = require('pipeline-validate-js')();
 var del = require('del');
 
@@ -25,7 +25,8 @@ gulp.task('validate', function() {
 gulp.task('default', ['clean', 'validate'] , function() {
   return gulp
     .src(config.lessFiles)
-    .pipe(compilePipeline.compileLESS());
+    .pipe(compilePipeline.compileLESS())
+    .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('clean', function () {

@@ -3,19 +3,17 @@
 'use strict';
 
 var handyman = require('pipeline-handyman');
-var gulp = require('gulp');
 var lazypipe = require('lazypipe');
 var plugins = require('gulp-load-plugins')({lazy: true});
 var reporter = require('gulp-less-reporter');
 var LessPluginAutoPrefix = require('less-plugin-autoprefix');
 
 var config = {
-  skipAutoprefix: false,
-  opts: {
-    concatCSS: false,
-    addSourceMaps: true,
+  autoprefix: true,
+  concatCSS: true,
+  addSourceMaps: true,
+  plugins: {
     autoprefix: {browsers: ['last 2 versions']},
-    output: 'dist/'
   }
 };
 
@@ -34,28 +32,23 @@ function compileLESSPipeline(options) {
   return pipeline;
 
   function compileLESS() {
+
+    var autoprefix = new LessPluginAutoPrefix(config.plugins.autoprefix);
+    var lessPlugins = config.autoprefix ? {plugins: [autoprefix]} : {plugins: []};
+
     return lazypipe()
       .pipe(function() {
-        return plugins.if(config.opts.addSourceMaps, plugins.sourcemaps.init());
-      })
-      .pipe(generateCSSFiles)
-      .pipe(function() {
-        return plugins.if(config.opts.concatCSS, plugins.concat('concat.css'));
+        return plugins.if(config.addSourceMaps, plugins.sourcemaps.init());
       })
       .pipe(function() {
-        return plugins.if(config.opts.addSourceMaps, plugins.sourcemaps.write('maps'));
+        return plugins.less(lessPlugins).on('error', reporter);
       })
-      .pipe(gulp.dest, config.opts.output);
+      .pipe(function() {
+        return plugins.if(config.concatCSS, plugins.concat('concat.css'));
+      })
+      .pipe(function() {
+        return plugins.if(config.addSourceMaps, plugins.sourcemaps.write('maps'));
+      });
   }
 
-  function generateCSSFiles() {
-    var autoprefix = new LessPluginAutoPrefix(config.opts.autoprefix);
-    var lessPlugins = config.skipAutoprefix ? {plugins: []} : {plugins: [autoprefix]};
-
-    return plugins.piece(
-      plugins.less(lessPlugins)
-      .on('error', reporter),
-      gulp.dest(config.opts.output)
-    );
-  }
 }
