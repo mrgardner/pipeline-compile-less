@@ -72,3 +72,5 @@ This pipeline returns an object. This object receives a stream with the LESS fil
 
 
 ## LICENSE
+
+  + MIT
