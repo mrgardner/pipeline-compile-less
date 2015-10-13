@@ -37,9 +37,9 @@ Pipeline options:
 
     1. __autoprefix__ If you don't want to have your CSS rules prefixed set this property to __false__.
 
-    2. __concatCSS__ If set to __false__ the pipeline won't concatenate the files and to generate a single CSS file.
+    2. __concatCSS__ If set to __false__ the pipeline won't concatenate the files to generate a single CSS file.
 
-    3. __addSourceMaps__ If set to __false__ source maps won't be generated for the compile files. By default the pipeline will generate the source maps and store them in _maps_.
+    3. __addSourceMaps__ If set to __false__ source maps won't be generated for the compiled files. By default the pipeline will generate the source maps and store them in _maps_.
 
     4. __plugins__ Gathers all of the specific configurations for the tasks used in the pipeline.
 
