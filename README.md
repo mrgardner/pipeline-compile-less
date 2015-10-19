@@ -26,7 +26,7 @@ var lessToCssPipeline = require('pipeline-compile-less')();
 gulp.task('default', function() {
   return gulp
     .src(['src/**/*.less'])
-    .pipe(lessToCssPipeline.compileLess());
+    .pipe(lessToCssPipeline.compileLESS());
 });
 ```
 
