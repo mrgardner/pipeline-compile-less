@@ -2,12 +2,13 @@
 
 var gulp = require('gulp');
 var compilePipeline = require('./src/index.js')();
+var testPipeline = require('pipeline-test-node')();
 var validatePipeline = require('pipeline-validate-js')();
-var del = require('del');
 
 var config = {
   jsFiles: [
-   'src/**/*.js',
+    'src/**/*.js',
+    'test/**/*.js'
   ],
 
   lessFiles: [
@@ -16,21 +17,19 @@ var config = {
 
 };
 
+gulp.task('test', function(){
+  return gulp.src(config.jsFiles)
+    .pipe(testPipeline.test());
+});
+
 gulp.task('validate', function() {
-  return gulp
-    .src(config.jsFiles)
+
+  return gulp.src(config.jsFiles)
     .pipe(validatePipeline.validateJS());
 });
 
-gulp.task('default', ['clean', 'validate'] , function() {
-  return gulp
-    .src(config.lessFiles)
-    .pipe(compilePipeline.compileLESS())
-    .pipe(gulp.dest('dist/'));
-});
+gulp.task('build', ['validate', 'test'] , function() {
 
-gulp.task('clean', function () {
-  return del.sync([
-    './dist/**'
-  ]);
+  return gulp.src(config.lessFiles)
+    .pipe(compilePipeline.compileLESS());
 });

@@ -20,13 +20,13 @@ _jenkins_: `TODO`
 ## Usage
 ```javascript
 var gulp = require('gulp');
-var lessToCssPipeline = require('pipeline-compile-less')();
+var lessPipeline = require('pipeline-compile-less')();
 
 
 gulp.task('default', function() {
   return gulp
     .src(['src/**/*.less'])
-    .pipe(lessToCssPipeline.compileLESS());
+    .pipe(lessPipeline.compileLESS());
 });
 ```
 

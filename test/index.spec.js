@@ -1,50 +1,88 @@
-/* global require */
 'use strict';
 
-var compilePipeline = require('../');
+var assert = require('stream-assert');
+var handyman = require('pipeline-handyman');
+var compilePipeline = require('../src/index.js');
+var fixtures = function (glob) { return path.join(__dirname, 'fixtures', glob); };
 var gulp = require('gulp');
 var path = require('path');
-var assert = require('stream-assert');
-var should = require('chai').should();
-var handyman = require('pipeline-handyman');
-
-var fixtures = function (glob) { return path.join(__dirname, 'fixtures', glob); };
+var testPath = path.join(__dirname, 'dest');
 
 describe('pipeline-compile-less', function() {
 
-  var testPath = path.join(__dirname, 'dist');
-
   it('Should output one file after concatenation', function (done) {
-    gulp
-      .src(fixtures('*'))
-      .pipe(compilePipeline({addSourceMaps: false, concatCSS:true, output: testPath}).compileLESS())
+
+    gulp.src(fixtures('*'))
+      .pipe(compilePipeline({
+        addSourceMaps: false,
+        output: testPath
+      }).compileLESS())
       .pipe(assert.length(1))
-      .pipe(assert.first(function (d) { d.relative.toString().should.eql(handyman.getPackageName() + '.css'); }))
-      .pipe(assert.end(done));
+      .pipe(assert.first(function (d) {
+        d.relative.toString().should.eql(handyman.getPackageName() + '.css');
+      }));
+
+    done();
   });
 
   it('Should output the concatenated file and the map', function (done) {
-    gulp
-      .src(fixtures('*'))
+
+    gulp.src(fixtures('*'))
       .pipe(compilePipeline({addSourceMaps: true, output: testPath}).compileLESS())
-      .pipe(assert.length(2))
-      .pipe(assert.end(done));
+      .pipe(assert.length(2));
+
+    done();
   });
 
   it('Should output the same number of files compiled', function (done) {
-    gulp
-      .src(fixtures('*'))
-      .pipe(compilePipeline({addSourceMaps: false, concatCSS: false, output: testPath}).compileLESS())
-      .pipe(assert.length(2))
-      .pipe(assert.end(done));
+
+    gulp.src(fixtures('*'))
+      .pipe(compilePipeline({
+        addSourceMaps: false,
+        concatCSS: false,
+        output: testPath}
+      ).compileLESS())
+      .pipe(assert.length(2));
+
+    done();
   });
 
-  it('Should output the same number of files compiled and the map for each one', function (done) {
-    gulp
-      .src(fixtures('*'))
-      .pipe(compilePipeline({addSourceMaps: true, concatCSS: false, output: testPath}).compileLESS())
-      .pipe(assert.length(4))
-      .pipe(assert.end(done));
+  it('Should output one file after concatenation', function (done) {
+
+    gulp.src(fixtures('*'))
+      .pipe(compilePipeline({
+        autoprefix: false,
+        addSourceMaps: false,
+        output: testPath
+      }).compileLESS())
+      .pipe(assert.length(1))
+      .pipe(assert.first(function (d) { d.relative.toString().should.eql('concat.css'); }));
+
+    done();
   });
 
+  it('Should output one file after concatenation', function (done) {
+
+    gulp.src(fixtures('*'))
+      .pipe(compilePipeline({
+        autoprefix: false,
+        addSourceMaps: false,
+        output: testPath,
+        concatCSS: false
+      }).compileLESS())
+      .pipe(assert.length(1))
+      .pipe(assert.first(function (d) { d.relative.toString().should.eql('concat.css'); }));
+
+    done();
+  });
+
+  it('Should output one file after concatenation with default options', function (done) {
+
+    gulp.src(fixtures('*'))
+      .pipe(compilePipeline().compileLESS())
+      .pipe(assert.length(1))
+      .pipe(assert.first(function (d) { d.relative.toString().should.eql('concat.css'); }));
+
+    done();
+  });
 });
