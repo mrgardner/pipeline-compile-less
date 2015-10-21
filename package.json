@@ -42,6 +42,7 @@
     "gulp-less": "3.0.3",
     "gulp-less-reporter": "0.0.2",
     "gulp-sourcemaps": "1.6.0",
+    "gulp-util": "3.0.7",
     "lazypipe": "1.0.1",
     "less-plugin-autoprefix": "1.5.1",
     "pipeline-handyman": "git+ssh://git@github.com/kenzanmedia/pipeline-handyman.git#0.1.0"
@@ -50,6 +51,6 @@
     "gulp": "3.9.0",
     "pipeline-test-node": "git+ssh://git@github.com/kenzanmedia/pipeline-test-node.git#0.2.0",
     "pipeline-validate-js": "git+ssh://git@github.com/kenzanmedia/pipeline-validate-js.git#0.1.0",
-    "stream-assert": "^2.0.3"
+    "stream-assert": "2.0.3"
   }
 }
