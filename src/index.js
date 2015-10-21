@@ -1,4 +1,4 @@
-/*global require, module */
+/* global require, module */
 
 'use strict';
 
@@ -11,6 +11,7 @@ var LessPluginAutoPrefix = require('less-plugin-autoprefix');
 var config = {
   autoprefix: true,
   concatCSS: true,
+  outputFileName: handyman.getPackageName() + '.css',
   addSourceMaps: true,
   plugins: {
     autoprefix: {browsers: ['last 2 versions']},
@@ -44,7 +45,7 @@ function compileLESSPipeline(options) {
         return plugins.less(lessPlugins).on('error', reporter);
       })
       .pipe(function() {
-        return plugins.if(config.concatCSS, plugins.concat('concat.css'));
+        return plugins.if(config.concatCSS, plugins.concat(config.outputFileName));
       })
       .pipe(function() {
         return plugins.if(config.addSourceMaps, plugins.sourcemaps.write('maps'));
