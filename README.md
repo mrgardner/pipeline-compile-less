@@ -1,4 +1,4 @@
-## Pipeline-compile-less
+## pipeline-compile-less
 
 
 ## Information
@@ -16,6 +16,8 @@ _jenkins_: `TODO`
 
 ## Install
 `npm install git+ssh:git@github.com:kenzanmedia/pipeline-compile-less.git`
+
+**note: https://github.com/kenzanmedia/pipeline-compile-less/issues/7**
 
 ## Usage
 ```javascript
@@ -35,17 +37,17 @@ gulp.task('default', function() {
 Pipeline options:
 * _config_ -> Object that contains the configuration.
 
-    1. __autoprefix__ If you don't want to have your CSS rules prefixed set this property to __false__.
-
-    2. __concatCSS__ If set to __false__ the pipeline won't concatenate the files to generate a single CSS file.
+    * __autoprefix__ If you don't want to have your CSS rules prefixed set this property to __false__.
     
-    3. __outputFileName__ If __concatCSS__ is set to __true__, this value will be used to name the file. By default, the config is set to get the name of the package that consumes pipeline-compile-less. So for example, it would end up named as `your-project.css`. If you set this value, do not suffix the string with '.css', as this is handled internally.
+    * __concatCSS__ If set to __false__ the pipeline won't concatenate the files to generate a single CSS file.
 
-    4. __addSourceMaps__ If set to __false__ source maps won't be generated for the compiled files. By default the pipeline will generate the source maps and store them in _maps_.
+    * __outputFileName__ If __concatCSS__ is set to __true__, this value will be used to name the file. By default, the config is set to get the name of the package that consumes pipeline-compile-less. So for example, it would end up named as `your-project.css`. If you set this value, do not suffix the string with '.css', as this is handled internally.
 
-    5. __plugins__ Gathers all of the specific configurations for the tasks used in the pipeline.
+    * __addSourceMaps__ If set to __false__ source maps won't be generated for the compiled files. By default the pipeline will generate the source maps and store them in _maps_.
 
-      + __plugins.autoprefix__ Adds vendor specific prefixes automatically for the last 2 versions. Also, you can provide your own autoprefix configuration setting an object-- following [this](https://github.com/postcss/autoprefixer#browsers) rules.
+    * __plugins__ Gathers all of the specific configurations for the tasks used in the pipeline.
+
+      * __plugins.autoprefix__ Adds vendor specific prefixes automatically for the last 2 versions. Also, you can provide your own autoprefix configuration setting an object-- following [this](https://github.com/postcss/autoprefixer#browsers) rules.
 
 
   Default:

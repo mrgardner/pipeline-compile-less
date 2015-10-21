@@ -48,9 +48,8 @@
   },
   "devDependencies": {
     "gulp": "3.9.0",
-    "gulp-util": "3.0.7",
-    "pipeline-test-node": "git+ssh://git@github.com/thescientist13/pipeline-test-node.git#0c3668ac947d425f1f77db181360949d84a5f7b7",
+    "pipeline-test-node": "git+ssh://git@github.com/kenzanmedia/pipeline-test-node.git#0.2.0",
     "pipeline-validate-js": "git+ssh://git@github.com/kenzanmedia/pipeline-validate-js.git#0.1.0",
-    "stream-assert": "2.0.3"
+    "stream-assert": "^2.0.3"
   }
 }

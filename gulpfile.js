@@ -17,19 +17,17 @@ var config = {
 
 };
 
-gulp.task('test', function(){
-  return gulp.src(config.jsFiles)
-    .pipe(testPipeline.test());
-});
-
 gulp.task('validate', function() {
 
   return gulp.src(config.jsFiles)
-    .pipe(validatePipeline.validateJS());
+    .pipe(validatePipeline.validateJS())
+    .pipe(testPipeline.test());
+
 });
 
-gulp.task('build', ['validate', 'test'] , function() {
+gulp.task('build', ['validate'] , function() {
 
   return gulp.src(config.lessFiles)
     .pipe(compilePipeline.compileLESS());
+
 });
