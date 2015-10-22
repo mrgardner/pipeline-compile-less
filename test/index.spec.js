@@ -1,5 +1,7 @@
 'use strict';
 
+var DEFAULT_PATH = 'concat.css';
+
 var assert = require('stream-assert');
 var handyman = require('pipeline-handyman');
 var compilePipeline = require('../src/index.js');
@@ -9,6 +11,10 @@ var testPath = path.join(__dirname, 'dest');
 
 function getFixtures (glob) {
   return path.join(__dirname, 'fixtures', glob);
+}
+
+function assertPath (file, path) {
+  return file.relative.toString().should.eql(path);
 }
 
 describe('pipeline-compile-less', function() {
@@ -21,8 +27,10 @@ describe('pipeline-compile-less', function() {
         output: testPath
       }).compileLESS())
       .pipe(assert.length(1))
-      .pipe(assert.first(function (d) {
-        d.relative.toString().should.eql(handyman.getPackageName() + '.css');
+      .pipe(assert.first(function (file) {
+        var customPath = handyman.getPackageName() + '.css';
+
+        assertPath(file, customPath);
       }));
 
     done();
@@ -59,7 +67,9 @@ describe('pipeline-compile-less', function() {
         output: testPath
       }).compileLESS())
       .pipe(assert.length(1))
-      .pipe(assert.first(function (d) { d.relative.toString().should.eql('concat.css'); }));
+      .pipe(assert.first(function (file) {
+        assertPath(file, DEFAULT_PATH);
+      }));
 
     done();
   });
@@ -74,7 +84,9 @@ describe('pipeline-compile-less', function() {
         concatCSS: false
       }).compileLESS())
       .pipe(assert.length(1))
-      .pipe(assert.first(function (d) { d.relative.toString().should.eql('concat.css'); }));
+      .pipe(assert.first(function (file) {
+        assertPath(file, DEFAULT_PATH);
+      }));
 
     done();
   });
@@ -84,7 +96,9 @@ describe('pipeline-compile-less', function() {
     gulp.src(getFixtures('*'))
       .pipe(compilePipeline().compileLESS())
       .pipe(assert.length(1))
-      .pipe(assert.first(function (d) { d.relative.toString().should.eql('concat.css'); }));
+      .pipe(assert.first(function (file) {
+        assertPath(file, DEFAULT_PATH);
+      }));
 
     done();
   });
