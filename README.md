@@ -55,7 +55,7 @@ Pipeline options:
   config = {
     autoprefix: true,
     concatCSS: false,
-    outputFileName: packageName.css,
+    outputFileName: '{package-name}.css',  //uses the name of the current package, from package.json
     addSourceMaps: true,
     plugins: {
       autoprefix: {browsers: ['last 2 versions']},
