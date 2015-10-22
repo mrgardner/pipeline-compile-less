@@ -1,12 +1,13 @@
-/* global require, module */
-
 'use strict';
 
+var autoprefixPlugin = require('less-plugin-autoprefix');
+var concat = require('gulp-concat');
 var handyman = require('pipeline-handyman');
+var gulpIf = require('gulp-if');
 var lazypipe = require('lazypipe');
-var plugins = require('gulp-load-plugins')({lazy: true});
+var less = require('gulp-less');
 var reporter = require('gulp-less-reporter');
-var LessPluginAutoPrefix = require('less-plugin-autoprefix');
+var sourcemaps = require('gulp-sourcemaps');
 
 var config = {
   autoprefix: true,
@@ -22,9 +23,8 @@ module.exports = compileLESSPipeline;
 
 function compileLESSPipeline(options) {
 
-  if (config) {
-    config = handyman.updateConf(config, options);
-  }
+  options = options || {};
+  config = handyman.updateConf(config, options);
 
   var pipeline = {
     compileLESS: compileLESS()
@@ -33,22 +33,23 @@ function compileLESSPipeline(options) {
   return pipeline;
 
   function compileLESS() {
+    var lessPlugins = {};
+    var autoprefix = new autoprefixPlugin(config.plugins.autoprefix);
 
-    var autoprefix = new LessPluginAutoPrefix(config.plugins.autoprefix);
-    var lessPlugins = config.autoprefix ? {plugins: [autoprefix]} : {plugins: []};
+    lessPlugins.plugins = config.autoprefix ? [autoprefix] : [];
 
     return lazypipe()
       .pipe(function() {
-        return plugins.if(config.addSourceMaps, plugins.sourcemaps.init());
+        return gulpIf(config.addSourceMaps, sourcemaps.init());
       })
       .pipe(function() {
-        return plugins.less(lessPlugins).on('error', reporter);
+        return less(lessPlugins).on('error', reporter);
       })
       .pipe(function() {
-        return plugins.if(config.concatCSS, plugins.concat(config.outputFileName));
+        return gulpIf(config.concatCSS, concat(config.outputFileName));
       })
       .pipe(function() {
-        return plugins.if(config.addSourceMaps, plugins.sourcemaps.write('maps'));
+        return gulpIf(config.addSourceMaps, sourcemaps.write('maps'));
       });
   }
 
