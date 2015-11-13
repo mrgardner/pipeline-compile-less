@@ -24,7 +24,7 @@ module.exports = compileLESSPipeline;
 function compileLESSPipeline(options) {
 
   options = options || {};
-  config = handyman.updateConf(config, options);
+  config = handyman.mergeConf(config, options);
 
   var pipeline = {
     compileLESS: compileLESS()
