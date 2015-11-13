@@ -5,15 +5,17 @@
 
 | Package       | Description   | Version|
 | ------------- |:-------------:| -----:|
-| Pipeline-compile-less| This pipeline compiles LESS files and returns CSS files | 0.2.0 |
+| pipeline-compile-less| This pipeline compiles LESS files and returns CSS files | 0.2.0 |
 
 # Overview
 
-_repo_: `https://github.com/kenzanlabs/pipeline-compile-less/`
+This pipeline assists the compilation of LESS into CSS, while optionally allowing for autoprefixing and concatination.
 
+**NOTE: as this project is still pre 1.0.0, it is subject to possible backwards incompatible changes as it matures.
+Also, as part of a repo migration, version 0.2.0 will not install, so please use any of the newer versions**
 
 ## Install
-`npm install git://github.com:kenzanlabs/pipeline-compile-less.git --save-dev`
+`npm install git://github.com/kenzanlabs/pipeline-compile-less.git --save-dev`
 
 **note: https://github.com/kenzanlabs/pipeline-compile-less/issues/7**
 
