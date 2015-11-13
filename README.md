@@ -5,19 +5,19 @@
 
 | Package       | Description   | Version|
 | ------------- |:-------------:| -----:|
-| Pipeline-compile-less| This pipeline compiles LESS files and returns CSS files | 0.2.0 |
+| pipeline-compile-less| This pipeline compiles LESS files and returns CSS files | 0.2.0 |
 
 # Overview
 
+This pipeline assists the compilation of LESS into CSS, while optionally allowing for autoprefixing and concatination.
 
-_repo_: `https://github.com/kenzanmedia/pipeline-compile-less/`
-
-_jenkins_: `TODO`
+**NOTE: as this project is still pre 1.0.0, it is subject to possible backwards incompatible changes as it matures.
+Also, as part of a repo migration, version 0.2.0 will not install, so please use any of the newer versions**
 
 ## Install
-`npm install git+ssh:git@github.com:kenzanmedia/pipeline-compile-less.git`
+`npm install git://github.com/kenzanlabs/pipeline-compile-less.git --save-dev`
 
-**note: https://github.com/kenzanmedia/pipeline-compile-less/issues/7**
+**note: https://github.com/kenzanlabs/pipeline-compile-less/issues/7**
 
 ## Usage
 ```javascript
@@ -80,16 +80,16 @@ This pipeline returns an object. This object receives a stream with the LESS fil
 
 ## LICENSE
 
-  Copyright (c) 2015 Kenzan <http://kenzan.com>
+Copyright (c) 2015 Kenzan <http://kenzan.com>
 
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-      http://www.apache.org/licenses/LICENSE-2.0
+  http://www.apache.org/licenses/LICENSE-2.0
 
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.

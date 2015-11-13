@@ -16,7 +16,7 @@
   "main": "src/index.js",
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com:kenzanmedia/pipeline-compile-less.git"
+    "url": "https://github.com/kenzanlabs/pipeline-compile-less"
   },
   "keywords": [
     "Gulp",
@@ -37,7 +37,7 @@
   "analyze": true,
   "license": "Apache-2.0",
   "dependencies": {
-    "gulp-concat": "^2.6.0",
+    "gulp-concat": "2.6.0",
     "gulp-if": "2.0.0",
     "gulp-less": "3.0.3",
     "gulp-less-reporter": "0.0.2",
@@ -45,12 +45,12 @@
     "gulp-util": "3.0.7",
     "lazypipe": "1.0.1",
     "less-plugin-autoprefix": "1.5.1",
-    "pipeline-handyman": "git+ssh://git@github.com/kenzanmedia/pipeline-handyman.git#0.1.0"
+    "pipeline-handyman": "git+ssh://git@github.com/kenzanlabs/pipeline-handyman.git#0.2.0"
   },
   "devDependencies": {
     "gulp": "3.9.0",
-    "pipeline-test-node": "git+ssh://git@github.com/kenzanmedia/pipeline-test-node.git#0.2.0",
-    "pipeline-validate-js": "git+ssh://git@github.com/kenzanmedia/pipeline-validate-js.git#0.1.0",
+    "pipeline-test-node": "git+ssh://git@github.com/kenzanlabs/pipeline-test-node.git#0.3.0",
+    "pipeline-validate-js": "git+ssh://git@github.com/kenzanlabs/pipeline-validate-js.git#0.2.0",
     "stream-assert": "2.0.3"
   }
 }
