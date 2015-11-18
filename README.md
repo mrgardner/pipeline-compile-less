@@ -15,7 +15,7 @@ This pipeline assists the compilation of LESS into CSS, while optionally allowin
 Also, as part of a repo migration, version 0.2.0 will not install, so please use any of the newer versions**
 
 ## Install
-`npm install git://github.com/kenzanlabs/pipeline-compile-less.git --save-dev`
+`npm install pipeline-compile-less.git --save-dev`
 
 **note: https://github.com/kenzanlabs/pipeline-compile-less/issues/7**
 
