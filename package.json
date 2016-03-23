@@ -40,9 +40,8 @@
     "gulp-concat": "2.6.0",
     "gulp-if": "2.0.0",
     "gulp-less": "3.0.3",
-    "gulp-less-reporter": "0.0.2",
+    "gulp-less-reporter": "0.0.3",
     "gulp-sourcemaps": "1.6.0",
-    "gulp-util": "3.0.7",
     "lazypipe": "1.0.1",
     "less-plugin-autoprefix": "1.5.1",
     "pipeline-handyman": "0.3.0"
