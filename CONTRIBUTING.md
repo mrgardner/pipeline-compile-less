@@ -1,6 +1,6 @@
 # Contributing to pipeline-compile-less
 As this project is governed under the [Keystone][] project, please make sure you have reviewed the contributing guidelines
-[there].
+[there][].
 
 [Keystone]: https://github.com/kenzanlabs/keystone
 [there]: https://github.com/kenzanlabs/keystone/blob/master/CONTRIBUTING.md
