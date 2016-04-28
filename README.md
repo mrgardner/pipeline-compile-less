@@ -22,13 +22,20 @@ Also, as part of a repo migration, version 0.2.0 will not install, so please use
 ## Usage
 ```javascript
 var gulp = require('gulp');
-var lessPipeline = require('pipeline-compile-less')();
+var lessPipeline = require('pipeline-compile-less');
 
 
 gulp.task('default', function() {
   return gulp
     .src(['src/**/*.less'])
     .pipe(lessPipeline.compileLESS());
+});
+
+//Usage with options
+gulp.task('default', function() {
+  return gulp
+    .src(['src/**/*.less'])
+    .pipe(lessPipeline.compileLESS({concatCSS: true}));
 });
 ```
 

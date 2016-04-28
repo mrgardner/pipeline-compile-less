@@ -19,38 +19,35 @@ var config = {
   }
 };
 
-module.exports = compileLESSPipeline;
-
-function compileLESSPipeline(options) {
-
-  options = options || {};
-  config = handyman.mergeConf(config, options);
-
-  var pipeline = {
-    compileLESS: compileLESS()
-  };
-
-  return pipeline;
-
-  function compileLESS() {
-    var lessPlugins = {};
-    var autoprefix = new autoprefixPlugin(config.plugins.autoprefix);
-
-    lessPlugins.plugins = config.autoprefix ? [autoprefix] : [];
-
-    return lazypipe()
-      .pipe(function() {
-        return gulpIf(config.addSourceMaps, sourcemaps.init());
-      })
-      .pipe(function() {
-        return less(lessPlugins).on('error', reporter);
-      })
-      .pipe(function() {
-        return gulpIf(config.concatCSS, concat(config.outputFileName));
-      })
-      .pipe(function() {
-        return gulpIf(config.addSourceMaps, sourcemaps.write('maps'));
-      });
+module.exports = {
+  compileLESS: function(options) {
+    if (options) {
+      handyman.log('Merging custom configuration');
+      config = handyman.mergeConf(config, options);
+    }
+    return pipelineFactory();
   }
+};
 
+function pipelineFactory() {
+  var lessPlugins = {};
+  var autoprefix = new autoprefixPlugin(config.plugins.autoprefix);
+  var pipeline;
+
+  lessPlugins.plugins = config.autoprefix ? [autoprefix] : [];
+  pipeline = lazypipe()
+    .pipe(function() {
+      return gulpIf(config.addSourceMaps, sourcemaps.init());
+    })
+    .pipe(function() {
+      return less(lessPlugins).on('error', reporter);
+    })
+    .pipe(function() {
+      return gulpIf(config.concatCSS, concat(config.outputFileName));
+    })
+    .pipe(function() {
+      return gulpIf(config.addSourceMaps, sourcemaps.write('maps'));
+    });
+
+  return pipeline();
 }

@@ -22,10 +22,10 @@ describe('pipeline-compile-less', function() {
   it('Should output one file after concatenation', function (done) {
 
     gulp.src(getFixtures('*'))
-      .pipe(compilePipeline({
+      .pipe(compilePipeline.compileLESS({
         addSourceMaps: false,
         output: testPath
-      }).compileLESS())
+      }))
       .pipe(assert.length(1))
       .pipe(assert.first(function (file) {
         var customPath = handyman.getPackageName() + '.css';
@@ -39,7 +39,7 @@ describe('pipeline-compile-less', function() {
   it('Should output the concatenated file and the map', function (done) {
 
     gulp.src(getFixtures('*'))
-      .pipe(compilePipeline({addSourceMaps: true, output: testPath}).compileLESS())
+      .pipe(compilePipeline.compileLESS({addSourceMaps: true, output: testPath}))
       .pipe(assert.length(2));
 
     done();
@@ -48,11 +48,11 @@ describe('pipeline-compile-less', function() {
   it('Should output the same number of files compiled', function (done) {
 
     gulp.src(getFixtures('*'))
-      .pipe(compilePipeline({
+      .pipe(compilePipeline
+      .compileLESS({
         addSourceMaps: false,
         concatCSS: false,
-        output: testPath}
-      ).compileLESS())
+        output: testPath}))
       .pipe(assert.length(2));
 
     done();
@@ -61,11 +61,12 @@ describe('pipeline-compile-less', function() {
   it('Should output one file after concatenation', function (done) {
 
     gulp.src(getFixtures('*'))
-      .pipe(compilePipeline({
+      .pipe(compilePipeline
+      .compileLESS({
         autoprefix: false,
         addSourceMaps: false,
         output: testPath
-      }).compileLESS())
+      }))
       .pipe(assert.length(1))
       .pipe(assert.first(function (file) {
         assertPath(file, DEFAULT_PATH);
@@ -77,12 +78,13 @@ describe('pipeline-compile-less', function() {
   it('Should output one file after concatenation', function (done) {
 
     gulp.src(getFixtures('*'))
-      .pipe(compilePipeline({
+      .pipe(compilePipeline
+      .compileLESS({
         autoprefix: false,
         addSourceMaps: false,
         output: testPath,
         concatCSS: false
-      }).compileLESS())
+      }))
       .pipe(assert.length(1))
       .pipe(assert.first(function (file) {
         assertPath(file, DEFAULT_PATH);
@@ -94,7 +96,7 @@ describe('pipeline-compile-less', function() {
   it('Should output one file after concatenation with default options', function (done) {
 
     gulp.src(getFixtures('*'))
-      .pipe(compilePipeline().compileLESS())
+      .pipe(compilePipeline.compileLESS())
       .pipe(assert.length(1))
       .pipe(assert.first(function (file) {
         assertPath(file, DEFAULT_PATH);
