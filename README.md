@@ -50,7 +50,7 @@ Pipeline options:
 
     * __outputFileName__ If __concatCSS__ is set to __true__, this value will be used to name the file. By default, the config is set to get the name of the package that consumes pipeline-compile-less. So for example, it would end up named as `your-project.css`. If you set this value, do not suffix the string with '.css', as this is handled internally.
 
-    * __addSourceMaps__ If set to __false__ source maps won't be generated for the compiled files. By default the pipeline will generate the source maps and store them in _maps_.
+    * __addSourceMaps__ If set to __false__ source maps won't be generated for the compiled files. By default the pipeline will generate the source maps and store them next to the new generated files with an extension of .map .
 
     * __plugins__ Gathers all of the specific configurations for the tasks used in the pipeline.
 

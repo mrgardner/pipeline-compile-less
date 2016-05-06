@@ -46,7 +46,7 @@ function pipelineFactory() {
       return gulpIf(config.concatCSS, concat(config.outputFileName));
     })
     .pipe(function() {
-      return gulpIf(config.addSourceMaps, sourcemaps.write('maps'));
+      return gulpIf(config.addSourceMaps, sourcemaps.write('.'));
     });
 
   return pipeline();
