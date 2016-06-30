@@ -15,7 +15,7 @@ var config = {
   outputFileName: handyman.getPackageName() + '.css',
   addSourceMaps: true,
   plugins: {
-    autoprefix: {browsers: ['last 2 versions']}
+    autoprefix: { browsers: ['last 2 versions']}
   }
 };
 

@@ -48,8 +48,8 @@
   },
   "devDependencies": {
     "gulp": "3.9.0",
-    "pipeline-test-node": "0.4.0",
-    "pipeline-validate-js": "0.3.0",
+    "pipeline-test-node": "1.0.0",
+    "pipeline-validate-js": "1.0.0-rc2",
     "stream-assert": "2.0.3"
   }
 }

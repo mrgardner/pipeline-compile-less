@@ -39,7 +39,9 @@ describe('pipeline-compile-less', function() {
   it('Should output the concatenated file and the map', function (done) {
 
     gulp.src(getFixtures('*'))
-      .pipe(compilePipeline.compileLESS({addSourceMaps: true, output: testPath}))
+      .pipe(compilePipeline.compileLESS({
+        addSourceMaps: true, output: testPath
+      }))
       .pipe(assert.length(2));
 
     done();
@@ -52,7 +54,8 @@ describe('pipeline-compile-less', function() {
       .compileLESS({
         addSourceMaps: false,
         concatCSS: false,
-        output: testPath}))
+        output: testPath
+      }))
       .pipe(assert.length(2));
 
     done();
