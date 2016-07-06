@@ -47,9 +47,11 @@
     "pipeline-handyman": "0.3.0"
   },
   "devDependencies": {
+    "chai": "3.5.0",
     "gulp": "3.9.0",
-    "pipeline-test-node": "0.4.0",
-    "pipeline-validate-js": "0.3.0",
-    "stream-assert": "2.0.3"
+    "gulp-clean": "0.3.2",
+    "gulp-expect-file": "0.0.7",
+    "pipeline-test-node": "1.0.1",
+    "pipeline-validate-js": "0.3.0"
   }
 }

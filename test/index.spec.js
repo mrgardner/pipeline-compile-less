@@ -1,21 +1,20 @@
 'use strict';
 
-var DEFAULT_PATH = 'concat.css';
-
-var assert = require('stream-assert');
-var handyman = require('pipeline-handyman');
 var compilePipeline = require('../src/index.js');
+var clean = require('gulp-clean');
 var gulp = require('gulp');
 var path = require('path');
-var testPath = path.join(__dirname, 'dest');
+var expect = require('gulp-expect-file');
+
+var altOutputPath = 'tmp';
 
 function getFixtures (glob) {
   return path.join(__dirname, 'fixtures', glob);
 }
 
-function assertPath (file, path) {
-  return file.relative.toString().should.eql(path);
-}
+beforeEach(function() {
+  clean({force: true});
+});
 
 describe('pipeline-compile-less', function() {
 
@@ -23,85 +22,84 @@ describe('pipeline-compile-less', function() {
 
     gulp.src(getFixtures('*'))
       .pipe(compilePipeline.compileLESS({
-        addSourceMaps: false,
-        output: testPath
+        autoprefix: false,
+        addSourceMaps: false
       }))
-      .pipe(assert.length(1))
-      .pipe(assert.first(function (file) {
-        var customPath = handyman.getPackageName() + '.css';
-
-        assertPath(file, customPath);
-      }));
-
+      .pipe(expect(['dest/pipeline-compile-less.css']));
     done();
   });
 
   it('Should output the concatenated file and the map', function (done) {
 
     gulp.src(getFixtures('*'))
-      .pipe(compilePipeline.compileLESS({addSourceMaps: true, output: testPath}))
-      .pipe(assert.length(2));
-
-    done();
-  });
-
-  it('Should output the same number of files compiled', function (done) {
-
-    gulp.src(getFixtures('*'))
-      .pipe(compilePipeline
-      .compileLESS({
-        addSourceMaps: false,
-        concatCSS: false,
-        output: testPath}))
-      .pipe(assert.length(2));
-
-    done();
-  });
-
-  it('Should output one file after concatenation', function (done) {
-
-    gulp.src(getFixtures('*'))
-      .pipe(compilePipeline
-      .compileLESS({
-        autoprefix: false,
-        addSourceMaps: false,
-        output: testPath
+      .pipe(compilePipeline.compileLESS({
+        addSourceMaps: true
       }))
-      .pipe(assert.length(1))
-      .pipe(assert.first(function (file) {
-        assertPath(file, DEFAULT_PATH);
-      }));
-
+      .pipe(expect(['dest/pipeline-compile-less.css', 'dest/pipeline-compile-less.css.map']));
     done();
   });
 
-  it('Should output one file after concatenation', function (done) {
+});
 
-    gulp.src(getFixtures('*'))
-      .pipe(compilePipeline
-      .compileLESS({
-        autoprefix: false,
-        addSourceMaps: false,
-        output: testPath,
-        concatCSS: false
-      }))
-      .pipe(assert.length(1))
-      .pipe(assert.first(function (file) {
-        assertPath(file, DEFAULT_PATH);
-      }));
+describe('default options', function() {
 
-    done();
-  });
-
-  it('Should output one file after concatenation with default options', function (done) {
+  it('Should output two files to default directory', function (done) {
 
     gulp.src(getFixtures('*'))
       .pipe(compilePipeline.compileLESS())
-      .pipe(assert.length(1))
-      .pipe(assert.first(function (file) {
-        assertPath(file, DEFAULT_PATH);
-      }));
-
+      .pipe(expect(['dest/pipeline-compile-less.css', 'dest/pipeline-compile-less.css.map']));
     done();
   });
+
+});
+
+describe('output to a specified directory', function() {
+
+  it('Should two files directory', function (done) {
+
+    gulp.src(getFixtures('*'))
+      .pipe(compilePipeline.compileLESS({
+        outputDirectory: altOutputPath,
+        output: altOutputPath
+      }))
+      .pipe(expect(['tmp/pipeline-compile-less.css.map', 'tmp/pipeline-compile-less.css']));
+    done();
+  });
+
+});
+
+describe('output to another filename', function() {
+
+  it('Should two files directory with specified filename', function (done) {
+
+    gulp.src(getFixtures('*'))
+      .pipe(compilePipeline.compileLESS({
+        outputFileName: 'test-filename.css',
+        outputDirectory: altOutputPath,
+        output: altOutputPath
+      }))
+      .pipe(expect(['tmp/test-filename.css.map', 'tmp/test-filename.css']));
+    done();
+  });
+
+});
+
+describe('concatenation set to false', function() {
+
+  afterEach(function() {
+    clean({force: true});
+  });
+
+  it('Should output two files to default directory', function (done) {
+
+    gulp.src(getFixtures('*'))
+      .pipe(compilePipeline.compileLESS({
+        autoprefix: false,
+        addSourceMaps: false,
+        concatCSS: false
+      }))
+      .pipe(expect(['test/fixtures/test-less1.css', 'test/fixtures/test-less2.css']));
+    done();
+  });
+
 });

@@ -1,5 +1,6 @@
 'use strict';
 
+var gulp = require('gulp');
 var autoprefixPlugin = require('less-plugin-autoprefix');
 var concat = require('gulp-concat');
 var handyman = require('pipeline-handyman');
@@ -13,6 +14,7 @@ var config = {
   autoprefix: true,
   concatCSS: true,
   outputFileName: handyman.getPackageName() + '.css',
+  outputDirectory: './dest/',
   addSourceMaps: true,
   plugins: {
     autoprefix: {browsers: ['last 2 versions']}
@@ -22,7 +24,6 @@ var config = {
 module.exports = {
   compileLESS: function(options) {
     if (options) {
-      handyman.log('Merging custom configuration');
       config = handyman.mergeConf(config, options);
     }
     return pipelineFactory();
@@ -47,6 +48,11 @@ function pipelineFactory() {
     })
     .pipe(function() {
       return gulpIf(config.addSourceMaps, sourcemaps.write('.'));
+    })
+    .pipe(function() {
+      return gulpIf(config.concatCSS, gulp.dest(config.outputDirectory), gulp.dest(function(file) {
+        return file.base;
+      }));
     });
 
   return pipeline();

@@ -44,9 +44,11 @@ Pipeline options:
 
     * __autoprefix__ If you don't want to have your CSS rules prefixed set this property to __false__.
     
-    * __concatCSS__ If set to __false__ the pipeline won't concatenate the files to generate a single CSS file.
+    * __concatCSS__ If set to __false__ the pipeline won't concatenate the files to generate a single CSS file and will output them to the same directory as the original files..
 
     * __outputFileName__ If __concatCSS__ is set to __true__, this value will be used to name the file. By default, the config is set to get the name of the package that consumes pipeline-compile-less. So for example, it would end up named as `your-project.css`. If you set this value, do not suffix the string with '.css', as this is handled internally.
+
+    * __outputDirectory__ If __concatCSS__ is set to __true__, . If you set this value, the .map and css files will be written to that directory. The default directory, if none is specified, is `dest`.
 
     * __addSourceMaps__ If set to __false__ source maps won't be generated for the compiled files. By default the pipeline will generate the source maps and store them next to the new generated files with an extension of .map .
 
@@ -61,6 +63,7 @@ Pipeline options:
     autoprefix: true,
     concatCSS: false,
     outputFileName: '{package-name}.css',  //uses the name of the current package, from package.json
+    outputDirectory: './dest/',
     addSourceMaps: true,
     plugins: {
       autoprefix: {browsers: ['last 2 versions']},
@@ -82,7 +85,8 @@ This pipeline returns an object. This object receives a stream with the LESS fil
   
   + If _config.outputFileName_ is set, that name will be used (and suffixed with '.css') instead of picking up the consuming package name as a default value. For example, the compiled file would be named as `your-custom-value.css` if you used 'your-custom-value'.
 
-
+  + If _config.outputDirectory is set, that name will be used to output .map and .css files, provided _config.concatCSS_ is __true__.
+  
 ## LICENSE
 
 Copyright (c) 2015 Kenzan <http://kenzan.com>

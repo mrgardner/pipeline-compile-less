@@ -2,32 +2,48 @@
 
 var gulp = require('gulp');
 var compilePipeline = require('./src/index.js');
-var testPipeline = require('pipeline-test-node')();
-var validatePipeline = require('pipeline-validate-js')();
+var testPipeline = require('pipeline-test-node');
+
+var options = {
+  plugins: {
+    istanbul: {
+      thresholds: {
+        global: {
+          branches: 70
+        }
+      }
+    }
+  }
+};
 
 var config = {
   jsFiles: [
-    'src/**/*.js',
-    'test/**/*.js'
+    '*.js',
+    'src/*.js',
+    'test/*.js'
   ],
 
   lessFiles: [
-   'test/**/*.less'
-  ]
-
+   'test/fixtures/*.less'
+  ],
+  test: {
+    jsFiles: [
+      '*/.js',
+      'src/**/*.js',
+      'test/*.js',
+      'test/*.*.js'
+    ]
+  }
 };
 
-gulp.task('validate', function() {
-
-  return gulp.src(config.jsFiles)
-    .pipe(validatePipeline.validateJS())
-    .pipe(testPipeline.test());
-
+gulp.task('compile:less', function() {
+  return gulp
+    .src(config.lessFiles)
+    .pipe(compilePipeline.compileLESS());
 });
 
-gulp.task('build', ['validate'] , function() {
-
-  return gulp.src(config.lessFiles)
-    .pipe(compilePipeline.compileLESS());
-
+gulp.task('build', ['compile:less'], function() {
+  return gulp
+    .src(config.test.jsFiles)
+    .pipe(testPipeline.test(options));
 });
